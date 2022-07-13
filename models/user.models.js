@@ -13,6 +13,7 @@ const User = database.define('user', {
     },
     email: {
         type: DataTypes.STRING,
+        unique:true,
         allowNull: false
     },
     password: {

@@ -19,7 +19,7 @@ Restaurant.belongsToMany(User, {through: 'review'});
 User.belongsToMany(Meal, {through: 'order'});
 Meal.belongsToMany(User, {through: 'order'});
 
-database.sync()
+database.sync({})
     .then(console.log('database synced!'))
     .catch(err => console.log(err));
 
