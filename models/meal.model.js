@@ -1,6 +1,6 @@
 const { database, DataTypes } = require('../utils/database.util');
 
-const { Restaurant } = require('./resturant.model')
+const { Restaurant } = require('./restaurant.model')
 
 const Meal = database.define('meals', {
     id: {

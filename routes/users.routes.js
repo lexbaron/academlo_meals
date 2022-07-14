@@ -12,15 +12,17 @@ usersRouter.post('/signup', createUser);
 
 usersRouter.post('/login', login);
 
-usersRouter.get('/', protectSession, protectAdminSession, getAllUsers)
+usersRouter.use(protectSession);
 
-usersRouter.patch('/:id', protectSession, userExist, protectUserAccount, updateUser);
+usersRouter.get('/',protectAdminSession, getAllUsers);
 
-usersRouter.delete('/:id', protectSession, userExist, protectUserAccount, deleteUser);
+usersRouter.patch('/:id', userExist, protectUserAccount, updateUser);
 
-usersRouter.get('/orders', protectSession, getAllUserOrder);
+usersRouter.delete('/:id', userExist, protectUserAccount, deleteUser);
 
-usersRouter.get('/orders/:id',protectSession, orderExist, getUserOrderById);
+usersRouter.get('/orders', getAllUserOrder);
+
+usersRouter.get('/orders/:id', orderExist, getUserOrderById);
 
 
 module.exports = { usersRouter };

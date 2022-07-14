@@ -100,11 +100,13 @@ const getAllUserOrder = catchAsync( async(req, res, next) => {
 });
 
 const getUserOrderById = catchAsync( async(req, res, next) => {
-	const { order } = req;
+	const { order, sessionUser } = req;
+
+	const userOrder = await Order.findOne({where: {id: order.id, userId: sessionUser.id}})
 
 	res.status(200).json({
 		status: 'succes',
-		order
+		userOrder
 	});
 });
 
