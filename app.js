@@ -5,6 +5,7 @@ const { AppError } = require('./utils/appError.util');
 
 const { usersRouter } = require('./routes/users.routes');
 const { restaurantsRouter } = require('./routes/restaurants.routes');
+const { mealsRouter } = require('./routes/meals.routes');
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/restaurants', restaurantsRouter);
+app.use('/api/v1/meals', mealsRouter)
 
 app.all('*', (req, res, next) => {
 	next(

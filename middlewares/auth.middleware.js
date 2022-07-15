@@ -51,4 +51,14 @@ const protectUserAccount = catchAsync( async(req, res, next) =>{
     next();
 });
 
-module.exports = { protectSession, protectUserAccount, protectAdminSession };
+const protectReviewAuthor = catchAsync( async(req, res, next) => {
+    const { review, sessionUser } = req;
+
+    if(sessionUser.id !== review.userId){
+        return next(new AppError('you do not made this review!', 402));
+    };
+
+    next();
+});
+
+module.exports = { protectSession, protectUserAccount, protectAdminSession, protectReviewAuthor };

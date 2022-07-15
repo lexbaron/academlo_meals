@@ -76,7 +76,7 @@ const updateUser = catchAsync( async (req, res, next) => {
 
 	await user.update({name, email});
 
-	res.status(201).json({
+	res.status(204).json({
 		status: 'success'
 	})
 });
@@ -94,7 +94,7 @@ const getAllUserOrder = catchAsync( async(req, res, next) => {
 	const userOrders = await Order.findAll({where: {userId: sessionUser.id }});
 
 	res.status(200).json({
-		status: 'succes',
+		status: 'success',
 		userOrders
 	});
 });
@@ -105,13 +105,9 @@ const getUserOrderById = catchAsync( async(req, res, next) => {
 	const userOrder = await Order.findOne({where: {id: order.id, userId: sessionUser.id}})
 
 	res.status(200).json({
-		status: 'succes',
+		status: 'success',
 		userOrder
 	});
-});
-
-const createReview = catchAsync( async(req, res, next) => {
-
 });
 
 module.exports = { createUser, login, updateUser, deleteUser, getAllUserOrder, getUserOrderById, getAllUsers };

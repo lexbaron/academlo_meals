@@ -1,7 +1,7 @@
 const { database, DataTypes } = require('../utils/database.util');
 
 const { User } = require('./user.models');
-const { Restaurant } = require('./resturant.model')
+const { Restaurant } = require('./restaurant.model')
 
 const Review = database.define('review',{
     id: {
@@ -28,6 +28,10 @@ const Review = database.define('review',{
     },
     comment: {
         type: DataTypes.STRING,
+        allowNull: true
+    },
+    rating: {
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     status: {
