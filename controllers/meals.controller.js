@@ -1,4 +1,5 @@
 const { Meal } = require('../models/meal.model');
+const { Restaurant } = require('../models/restaurant.model');
 
 const { catchAsync } = require('../utils/catchAsync.util');
 
@@ -19,7 +20,7 @@ const createMeal = catchAsync( async(req, res, next) => {
 });
 
 const getAllMeals = catchAsync( async(req, res, next) => {
-    const meals = await Meal.findAll({ where: {status: 'active'} });
+    const meals = await Meal.findAll({ where: {status: 'active'}, include: {model: Restaurant} });
 
     res.status(200).json({
         status: 'success',
@@ -29,10 +30,12 @@ const getAllMeals = catchAsync( async(req, res, next) => {
 
 const getMealById = catchAsync( async(req, res, next) => {
     const { meal } = req;
+
+    const mealById = await Meal.findOne({where: {id: meal.id}, include: {model: Restaurant}})
     
     res.status(200).json({
         status: 'success',
-        meal
+        mealById
     });
 });
 

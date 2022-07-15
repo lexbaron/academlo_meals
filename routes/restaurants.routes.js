@@ -14,12 +14,13 @@ const {
 const { protectSession, protectAdminSession, protectReviewAuthor } = require('../middlewares/auth.middleware');
 const { restaurantExist } = require('../middlewares/restaurants.middleware');
 const { reviewExist } = require('../middlewares/reviews.middleware');
+const { createRestaurantsValidator, createReviewsValidator } = require('../middlewares/validators.middleware');
 
 const restaurantsRouter = express.Router();
 
 restaurantsRouter.use(protectSession);
 
-restaurantsRouter.post('/', protectAdminSession, createRestaurant);
+restaurantsRouter.post('/', protectAdminSession, createRestaurantsValidator, createRestaurant);
 
 restaurantsRouter.get('/', getAllRestaurants);
 
@@ -29,7 +30,7 @@ restaurantsRouter.patch('/:id', protectAdminSession, restaurantExist, updateRest
 
 restaurantsRouter.delete('/:id', protectAdminSession, restaurantExist, deleteRestaurant);
 
-restaurantsRouter.post('/reviews/:restaurantId', restaurantExist, createRestaurantReview);
+restaurantsRouter.post('/reviews/:restaurantId', restaurantExist, createReviewsValidator, createRestaurantReview);
 
 restaurantsRouter.use('/reviews/:id', reviewExist, protectReviewAuthor)
 

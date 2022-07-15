@@ -34,9 +34,14 @@ const getAllRestaurants = catchAsync( async(req, res, next) => {
 const getRestaurantById = catchAsync( async(req, res, next) => {
     const { restaurant } = req;
 
+    const restaurantById = await Restaurant.findOne({
+        where: {id: restaurant.id},
+        include: {model: User}
+    });
+
     res.status(200).json({
         status: 'success',
-        restaurant
+        restaurantById
     })
 });
 

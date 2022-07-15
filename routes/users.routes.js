@@ -3,12 +3,20 @@ const express = require('express');
 const { protectSession, protectUserAccount, protectAdminSession } = require('../middlewares/auth.middleware');
 const { userExist } = require('../middlewares/users.middleware');
 const { orderExist } = require('../middlewares/orders.midddleware');
+const { createUsersValidator } = require('../middlewares/validators.middleware');
 
-const { createUser, login, deleteUser, getAllUserOrder, getUserOrderById, updateUser, getAllUsers } = require('../controllers/users.controller');
+const { createUser,
+    login,
+    deleteUser,
+    getAllUserOrder,
+    getUserOrderById,
+    updateUser,
+    getAllUsers } = require('../controllers/users.controller');
+
 
 const usersRouter = express.Router();
 
-usersRouter.post('/signup', createUser);
+usersRouter.post('/signup', createUsersValidator, createUser);
 
 usersRouter.post('/login', login);
 

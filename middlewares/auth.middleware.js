@@ -61,4 +61,14 @@ const protectReviewAuthor = catchAsync( async(req, res, next) => {
     next();
 });
 
-module.exports = { protectSession, protectUserAccount, protectAdminSession, protectReviewAuthor };
+const protectOrderAuthor = catchAsync( async(req, res, next) => {
+    const { order, sessionUser } = req;
+
+    if(sessionUser.id !== order.userId){
+        return next(new AppError('you do not made this order!', 402));
+    };
+
+    next();
+});
+
+module.exports = { protectSession, protectUserAccount, protectAdminSession, protectReviewAuthor, protectOrderAuthor };

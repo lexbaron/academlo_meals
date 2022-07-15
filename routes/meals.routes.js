@@ -10,12 +10,13 @@ const {
 
 const { protectAdminSession, protectSession } = require('../middlewares/auth.middleware')
 const { mealExist } = require('../middlewares/meals.middleware');
+const { createMealsValidator } = require('../middlewares/validators.middleware');
 
-const mealsRouter = express();
+const mealsRouter = express.Router();
 
 mealsRouter.use(protectSession);
 
-mealsRouter.post('/:id', protectAdminSession, createMeal);
+mealsRouter.post('/:id', protectAdminSession, createMealsValidator, createMeal);
 
 mealsRouter.get('/', getAllMeals);
 

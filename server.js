@@ -13,13 +13,13 @@ database.authenticate()
 Restaurant.hasMany(Meal);
 Meal.belongsTo(Restaurant);
 
-User.belongsToMany(Restaurant, {through: 'review'});
-Restaurant.belongsToMany(User, {through: 'review'});
+User.belongsToMany(Restaurant, { through: 'review' });
+Restaurant.belongsToMany(User, { through: 'review' });
 
 User.belongsToMany(Meal, {through: 'order'});
 Meal.belongsToMany(User, {through: 'order'});
 
-database.sync({})
+database.sync({force: false})
     .then(console.log('database synced!'))
     .catch(err => console.log(err));
 

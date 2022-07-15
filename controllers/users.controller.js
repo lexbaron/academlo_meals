@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 
 const { User } = require('../models/user.models');
 const { Order } = require('../models/order.model');
+const { Meal } = require('../models/meal.model');
+const { Restaurant } = require('../models/restaurant.model');
 
 const { catchAsync } = require('../utils/catchAsync.util');
 const { AppError } = require('../utils/appError.util');
@@ -91,7 +93,9 @@ const deleteUser = catchAsync( async (req, res, next) => {
 
 const getAllUserOrder = catchAsync( async(req, res, next) => {
 	const { sessionUser } = req;
-	const userOrders = await Order.findAll({where: {userId: sessionUser.id }});
+	const userOrders = await Order.findAll({
+		where: {userId: sessionUser.id }
+	});
 
 	res.status(200).json({
 		status: 'success',

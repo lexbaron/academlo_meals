@@ -6,13 +6,13 @@ const { catchAsync } = require('../utils/catchAsync.util');
 const orderExist = catchAsync( async (req, res, next) =>{
     const { id } = req.params;
 
-    const order = await Order.findOne({ where:{ id } });
+    const order = await Order.findOne({ where:{ id, status: 'active' } });
 
     if(!order){
         return next(new AppError('order not found', 404));
     };
 
-    req.order = oder;
+    req.order = order;
     next();
 });
 

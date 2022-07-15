@@ -4,7 +4,7 @@ const { User } = require('./user.models');
 const { Restaurant } = require('./restaurant.model')
 
 const Review = database.define('review',{
-    id: {
+    Id: {
         primaryKey: true,
         autoIncrement: true,
         type: DataTypes.INTEGER,
