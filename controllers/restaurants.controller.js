@@ -21,8 +21,16 @@ const createRestaurant = catchAsync( async(req, res, next) => {
 
 const getAllRestaurants = catchAsync( async(req, res, next) => {
     const restaurants = await Restaurant.findAll({
+        attributes: ['id', 'name', 'address', 'rating', 'status'],
         where: {status: 'active'},
-        include: {model: Review}
+        include: {
+            model: Review,
+            attributes: ['id', 'comment', 'rating', 'status'],
+            include: {
+                model: User, 
+                attributes: ['name', 'email']
+            }
+        }
     });
 
     res.status(200).json({
@@ -35,8 +43,16 @@ const getRestaurantById = catchAsync( async(req, res, next) => {
     const { restaurant } = req;
 
     const restaurantById = await Restaurant.findOne({
-        where: {id: restaurant.id},
-        include: {model: User}
+        where: {id: restaurant.id, status: 'active'},
+        attributes: ['id', 'name', 'address', 'rating', 'status'],
+        include: {
+            model: Review,
+            attributes: ['id', 'comment', 'rating', 'status'],
+            include: {
+                model: User, 
+                attributes: ['name', 'email']
+            }
+        }
     });
 
     res.status(200).json({

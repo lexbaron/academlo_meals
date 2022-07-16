@@ -115,7 +115,18 @@ const getAllUserOrder = catchAsync( async(req, res, next) => {
 const getUserOrderById = catchAsync( async(req, res, next) => {
 	const { order, sessionUser } = req;
 
-	const userOrder = await Order.findOne({where: {id: order.id, userId: sessionUser.id}})
+	const userOrder = await Order.findOne({where: {id: order.id, userId: sessionUser.id},
+		attributes: ['id', 'totalPrice', 'quantity', 'userId'],
+		where: {userId: sessionUser.id },
+		include: {
+			model: Meal,
+			attributes: ['id', 'name', 'price'],
+			include: {
+				model: Restaurant,
+				attributes: ['id', 'name', 'address', 'rating']
+			}
+		}
+	})
 
 	res.status(200).json({
 		status: 'success',

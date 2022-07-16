@@ -20,7 +20,13 @@ const createMeal = catchAsync( async(req, res, next) => {
 });
 
 const getAllMeals = catchAsync( async(req, res, next) => {
-    const meals = await Meal.findAll({ where: {status: 'active'}, include: {model: Restaurant} });
+    const meals = await Meal.findAll({ where: {status: 'active'},
+    attributes:['id', 'name', 'price', 'status'],
+    include: {
+        model: Restaurant,
+        attributes: ['name', 'address', 'rating', 'status']
+    } 
+});
 
     res.status(200).json({
         status: 'success',
@@ -31,7 +37,13 @@ const getAllMeals = catchAsync( async(req, res, next) => {
 const getMealById = catchAsync( async(req, res, next) => {
     const { meal } = req;
 
-    const mealById = await Meal.findOne({where: {id: meal.id}, include: {model: Restaurant}})
+    const mealById = await Meal.findOne({where: {id: meal.id},
+        attributes:['id', 'name', 'price', 'status'],
+        include: {
+            model: Restaurant,
+            attributes: ['name', 'address', 'rating', 'status']
+        } 
+    })
     
     res.status(200).json({
         status: 'success',

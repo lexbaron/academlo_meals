@@ -1,5 +1,6 @@
 const { Order } = require('../models/order.model');
 const { Meal } = require('../models/meal.model');
+const { Restaurant } = require('../models/restaurant.model');
 
 const { catchAsync } = require('../utils/catchAsync.util');
 const { AppError } = require('../utils/appError.util');
@@ -32,7 +33,18 @@ const createOrder = catchAsync( async(req, res, next) => {
 const getAllUserOrders = catchAsync( async(req, res, next) => {
     const { sessionUser } = req;
 
-    const orders = await Order.findAll({ where: {userId: sessionUser.id} });
+    const orders = await Order.findAll({
+        attributes: ['id', 'totalPrice', 'quantity', 'userId'],
+        where: {userId: sessionUser.id},
+        include: {
+			model: Meal,
+			attributes: ['id', 'name', 'price'],
+			include: {
+				model: Restaurant,
+				attributes: ['id', 'name', 'address', 'rating']
+			}
+		}
+    });
 
     res.status(200).json({
         status: 'success',
