@@ -94,7 +94,16 @@ const deleteUser = catchAsync( async (req, res, next) => {
 const getAllUserOrder = catchAsync( async(req, res, next) => {
 	const { sessionUser } = req;
 	const userOrders = await Order.findAll({
-		where: {userId: sessionUser.id }
+		attributes: ['id', 'totalPrice', 'quantity', 'userId'],
+		where: {userId: sessionUser.id },
+		include: {
+			model: Meal,
+			attributes: ['id', 'name', 'price'],
+			include: {
+				model: Restaurant,
+				attributes: ['id', 'name', 'address', 'rating']
+			}
+		}
 	});
 
 	res.status(200).json({

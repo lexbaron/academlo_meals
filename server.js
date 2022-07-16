@@ -5,6 +5,8 @@ const { database } = require('./utils/database.util');
 const { Meal } = require('./models/meal.model');
 const { Restaurant } = require('./models/restaurant.model');
 const { User } = require('./models/user.models');
+const { Review } = require('./models/review.model');
+const { Order } = require('./models/order.model');
 
 database.authenticate()
     .then(console.log('database authenticated!'))
@@ -13,11 +15,17 @@ database.authenticate()
 Restaurant.hasMany(Meal);
 Meal.belongsTo(Restaurant);
 
-User.belongsToMany(Restaurant, { through: 'review' });
-Restaurant.belongsToMany(User, { through: 'review' });
+User.hasMany(Review);
+Review.belongsTo(User);
 
-User.belongsToMany(Meal, {through: 'order'});
-Meal.belongsToMany(User, {through: 'order'});
+Restaurant.hasMany(Review);
+Review.belongsTo(Restaurant);
+
+User.hasMany(Order);
+Order.belongsTo(User);
+
+Meal.hasMany(Order);
+Order.belongsTo(Meal);
 
 database.sync({force: false})
     .then(console.log('database synced!'))
